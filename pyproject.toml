@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "launchhound"
+version = "0.1.0"
+description = "Sniff out polished product-launch videos from X and classify them with OpenAI vision."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "openai>=2.0.0,<3",
+  "pydantic>=2.10,<3",
+  "python-dotenv>=1.0,<2",
+  "Pillow>=11.0,<13",
+  "twscrape>=0.20.1,<0.21",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<10",
+  "ruff>=0.11,<1",
+]
+
+[project.scripts]
+launchhound = "twitter_scrapper.cli:main"
+launch-classifier = "twitter_scrapper.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/twitter_scrapper"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
